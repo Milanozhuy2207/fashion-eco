@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const productRoutes = require('../routes/productRoutes');
 
 dotenv.config()
 const app = express();
@@ -15,7 +16,9 @@ mongoose.connect(process.env.MONGO_URL)
     
 app.get('/api/test', (req, res) => {
   res.send({ message: "Hệ thống E-Commerce giày dép đã sẵn sàng!" });
-});
+})
+
+app.use('/api/products',productRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
