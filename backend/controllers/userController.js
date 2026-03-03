@@ -57,3 +57,4 @@ module.exports = {
     registerUser,
     authUser
 }
+

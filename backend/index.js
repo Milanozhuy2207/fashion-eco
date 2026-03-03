@@ -1,24 +1,22 @@
+// backend/server.js
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const productRoutes = require('../routes/productRoutes');
+const connectDB = require('./config/db');
+
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 dotenv.config()
-const app = express();
-app.use(cors());
-app.use(express.json());
+const app = express()
+app.use(express.json())
 
-mongoose.connect(process.env.MONGO_URL)
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error('DB Connection Error:', err));
-
-    
-app.get('/api/test', (req, res) => {
-  res.send({ message: "Hệ thống E-Commerce giày dép đã sẵn sàng!" });
-})
-
-app.use('/api/products',productRoutes)
+// Đăng ký API
+app.use('/api/products', productRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/orders', orderRoutes)
+app.use('/api/categories', categoryRoutes)
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Hệ thống Backend thời trang chạy tại port ${PORT}`));
